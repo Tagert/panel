@@ -1,85 +1,82 @@
-import { Divider, IconButton, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useTheme, styled, Theme } from "@mui/material/styles";
-import MuiDrawer from "@mui/material/Drawer";
-
-const drawerWidth = 250;
-
-const openedMixin = (theme: Theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme: Theme) => ({
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== "open" })(({ theme }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        ...openedMixin(theme),
-        "& .MuiDrawer-paper": openedMixin(theme),
-      },
-    },
-    {
-      props: ({ open }) => !open,
-      style: {
-        ...closedMixin(theme),
-        "& .MuiDrawer-paper": closedMixin(theme),
-      },
-    },
-  ],
-}));
+import { Box, Divider, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { StyledDrawer } from "../../../lib/StyledDrawer";
+import { sideNavbarCommerce, sideNavbarListSettings } from "../consts";
 
 type SideNavbarProp = {
   open: boolean;
   handleDrawerClose: () => void;
 };
 
-export const SideNavbar = ({ open, handleDrawerClose }: SideNavbarProp) => {
-  const theme = useTheme();
-
-  const sideNavbarList = ["Inbox", "Starred", "Send email", "Drafts"];
-
+export const SideNavbar = ({ open }: SideNavbarProp) => {
   return (
     <StyledDrawer variant="permanent" open={open}>
-      <div>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === "rtl" ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-        </IconButton>
-      </div>
+      {open ? (
+        <Box p={2}>
+          <Typography variant="h6" align="center" color="#fff">
+            Company Name
+          </Typography>
+        </Box>
+      ) : (
+        <Box p={2}>
+          <Typography variant="h6" align="center" color="#fff">
+            CN
+          </Typography>
+        </Box>
+      )}
 
-      <Divider />
+      <Divider sx={{ borderColor: "#5e5d62" }} />
 
-      <List>
-        {sideNavbarList.map((text, index) => (
-          <ListItem component="button" key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+      <Box component="section" p={2}>
+        <List>
+          {sideNavbarCommerce.map(item => (
+            <ListItem
+              component="button"
+              key={item.title}
+              sx={{
+                bgcolor: "transparent",
+                border: "none",
+                borderRadius: 2,
+                cursor: "pointer",
+                paddingX: 0,
+                paddingLeft: 1,
+                transition: "background-color 0.3s ease",
+                "&:hover": {
+                  bgcolor: "rgba(255, 255, 255, 0.1)",
+                },
+              }}
+            >
+              <ListItemIcon sx={{ color: "#fff" }}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} sx={{ color: "#fff" }} />
+            </ListItem>
+          ))}
+
+          <Divider
+            sx={{ position: "relative", left: "-1rem", width: "calc(100% + 2rem)", marginY: 2, borderColor: "#5e5d62" }}
+          />
+
+          {sideNavbarListSettings.map(item => (
+            <ListItem
+              component="button"
+              key={item.title}
+              sx={{
+                bgcolor: "transparent",
+                border: "none",
+                borderRadius: 2,
+                cursor: "pointer",
+                paddingX: 0,
+                paddingLeft: 1,
+                transition: "background-color 0.3s ease",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 0.1)",
+                },
+              }}
+            >
+              <ListItemIcon sx={{ color: "#fff" }}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.title} sx={{ color: "#fff" }} />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     </StyledDrawer>
   );
 };

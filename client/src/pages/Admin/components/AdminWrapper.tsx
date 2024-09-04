@@ -1,4 +1,4 @@
-import { Grid2 } from "@mui/material";
+import { Box, Grid2 } from "@mui/material";
 import { UpperNavbar } from "./UpperNavbar";
 import { ContentWrapper } from "./ContentWrapper";
 import { useState } from "react";
@@ -6,10 +6,6 @@ import { SideNavbar } from "./SideNavbar";
 
 export const AdminWrapper = () => {
   const [open, setOpen] = useState(true);
-
-  //   const handleDrawerOpen = () => {
-  //     setOpen(true);
-  //   };
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -20,14 +16,14 @@ export const AdminWrapper = () => {
   };
 
   return (
-    <>
+    <Box display="flex" gap={1} height={"100vh"}>
       <SideNavbar open={open} handleDrawerClose={handleDrawerClose} />
 
-      <Grid2 container spacing={2} display="flex" flex={1} flexDirection="column" ml={open ? 35 : 10} p={2}>
+      <Grid2 container spacing={2} display="flex" flex={1} flexDirection="column" p={2}>
         <UpperNavbar handleDrawerToggle={handleDrawerToggle} open={open} />
 
         <ContentWrapper />
       </Grid2>
-    </>
+    </Box>
   );
 };
