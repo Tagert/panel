@@ -1,5 +1,5 @@
 import { Box, Divider, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
-import { StyledDrawer } from "../../../lib/StyledDrawer";
+import { StyledDrawer } from "../../../libs/StyledDrawer";
 import { sideNavbarCommerce, sideNavbarListSettings } from "../consts";
 
 type SideNavbarProp = {
