@@ -12,8 +12,16 @@ import SettingsIcon from "@mui/icons-material/Settings";
 
 export const sideNavbarCommerce = [
   { title: "Dashboard", icon: <DashboardIcon /> },
-  { title: "Products", icon: <InventoryIcon /> },
-  { title: "Orders", icon: <ShoppingCartIcon /> },
+  {
+    title: "Products",
+    icon: <InventoryIcon />,
+    subItems: [{ title: "Add Product" }, { title: "Product List" }, { title: "Categories" }, { title: "Brands" }],
+  },
+  {
+    title: "Orders",
+    icon: <ShoppingCartIcon />,
+    subItems: [{ title: "Order List" }, { title: "Order Details" }],
+  },
   { title: "Customers", icon: <SupervisorAccountIcon /> },
   { title: "Statistics", icon: <EqualizerIcon /> },
   { title: "Review", icon: <CommentBankIcon /> },

@@ -2,7 +2,7 @@ import { Box, Grid2 } from "@mui/material";
 import { UpperNavbar } from "./UpperNavbar";
 import { ContentWrapper } from "./ContentWrapper";
 import { useState } from "react";
-import { SideNavbar } from "./SideNavbar";
+import { SideNavbar } from "./SideNavbar/SideNavbar";
 
 export const AdminWrapper = () => {
   const [open, setOpen] = useState(true);
