@@ -1,6 +1,6 @@
 import { Box, Grid2 } from "@mui/material";
-import { UpperNavbar } from "./UpperNavbar";
-import { ContentWrapper } from "./ContentWrapper";
+import { UpperNavbar } from "./UpperNavbar/UpperNavbar";
+import { ContentWrapper } from "./ContentWrappet/ContentWrapper";
 import { useState } from "react";
 import { SideNavbar } from "./SideNavbar/SideNavbar";
 

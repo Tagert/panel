@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { AdminWrapper } from "./components/AdminWrapper";
+import { AdminWrapper } from "./AdminWrapper";
 
 export const Admin = () => {
   return (

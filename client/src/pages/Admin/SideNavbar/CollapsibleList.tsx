@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { List, ListItem, ListItemText, Collapse, ListItemIcon } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
-import { SubItem } from "../../../../types/subItem.type";
+import { SubItem } from "../../../types/subItem.type";
 
 type CollapsibleListProps = {
   title: string;
@@ -45,13 +45,15 @@ export const CollapsibleList = ({ title, icon, subItems }: CollapsibleListProps)
             <ListItem
               key={subItem.title}
               sx={{
-                pl: 8,
+                pl: 1,
                 border: "none",
                 borderRadius: 2,
                 cursor: "pointer",
                 "&:hover": { bgcolor: "rgba(255, 255, 255, 0.1)" },
               }}
             >
+              <ListItemIcon sx={{ color: "#ffffffcc" }}>{subItem.icon}</ListItemIcon>
+
               <ListItemText primary={subItem.title} sx={{ color: "#fff" }} />
             </ListItem>
           ))}
