@@ -1,7 +1,7 @@
 import { throwError } from '../utils/throw-error';
 import { validateEnvs } from '../utils/validate-env';
 
-const { PORT, MONGO_CONNECTION, JWT_SECRET, JWT_EXPIRATION, DB_NAME } = process.env;
+const { PORT, MONGO_CONNECTION, JWT_SECRET, JWT_EXPIRATION, DB_NAME, SALT_ROUNDS } = process.env;
 
 const requiredEnvs = {
   PORT,
@@ -9,6 +9,7 @@ const requiredEnvs = {
   JWT_EXPIRATION,
   MONGO_CONNECTION,
   DB_NAME,
+  SALT_ROUNDS,
 };
 
 validateEnvs(requiredEnvs);
@@ -24,5 +25,8 @@ export const config = {
   db: {
     connection: MONGO_CONNECTION ?? throwError('MONGO_CONNECTION is required'),
     name: DB_NAME ?? 'myApp',
+  },
+  hash: {
+    salt: parseInt(SALT_ROUNDS ?? '10', 10),
   },
 };

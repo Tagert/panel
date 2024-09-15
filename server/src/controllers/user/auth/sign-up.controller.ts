@@ -1,31 +1,28 @@
 import type { RequestHandler } from 'express';
 import { UserModel } from '../../../models/user.model';
 import { handleError } from '../../../utils/handle-error';
-import { validatePassword } from '../../../utils/validations/password.validation';
-import { validateEmail } from '../../../utils/validations/email.validation';
 import { hashPassword } from '../../../utils/hash-password';
 import { toUpperCase } from '../../../utils/to-upper-case';
+import { userRegistrationSchema } from '../../../utils/validations/user-schema.validation';
 
 export const SIGN_UP: RequestHandler = async (req, res) => {
+  const { success, data, error } = userRegistrationSchema.safeParse(req.body);
+
+  if (!success) {
+    return res.status(400).json({
+      message: 'Invalid input',
+      errors: error.format(),
+    });
+  }
+
+  const { name, last_name, email, password } = req.body;
+
   try {
-    const { name, last_name, email, password } = req.body;
+    const hashedPassword = await hashPassword(password);
 
-    const hash = await hashPassword(password);
+    const existingUser = await UserModel.findOne({ email });
 
-    const emailValidation = validateEmail(email);
-    const passwordValidation = validatePassword(password);
-
-    if (!emailValidation) {
-      return res.status(400).json({ message: 'Please provide a properly formatted email address' });
-    }
-
-    if (passwordValidation !== true) {
-      return res.status(400).json({ message: passwordValidation });
-    }
-
-    const isUserExist = await UserModel.findOne({ email });
-
-    if (isUserExist) {
+    if (existingUser) {
       return res.status(409).json({ message: 'User with this email already exists' });
     }
 
@@ -33,15 +30,15 @@ export const SIGN_UP: RequestHandler = async (req, res) => {
       name: toUpperCase(name),
       last_name,
       email,
-      password: hash,
+      password: hashedPassword,
     });
 
     user.id = user._id.toString();
 
-    const response = await user.save();
+    const savedUser = await user.save();
 
     return res.status(201).json({
-      user: response,
+      user: savedUser,
       message: `User (${email}) was added successfully`,
     });
   } catch (err: unknown) {

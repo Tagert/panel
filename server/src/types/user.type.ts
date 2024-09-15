@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 import { Entity } from './shared/globals.type';
 
+export type UserPayloadType = {
+  id: string;
+};
+
 export enum UserRole {
   admin = 'admin',
   manager = 'manager',
@@ -8,7 +12,7 @@ export enum UserRole {
   client = 'client',
 }
 
-export type UserBody = {
+export type UserBodyType = {
   name: string;
   last_name: string;
   age: number;
@@ -24,6 +28,6 @@ export type UserBody = {
   favorites: [string];
 };
 
-export type UserType = UserBody & Entity;
+export type UserType = UserBodyType & Entity;
 
 export type UserModel = mongoose.Model<UserType>;

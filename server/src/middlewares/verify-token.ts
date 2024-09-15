@@ -1,18 +1,13 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
+import { UserPayloadType } from '../types/user.type';
 
-type DecodedTokenType = {
-  userId: string;
-  name: string;
-  email: string;
-};
-
-export const verifyToken = (token: string, secret: string): Promise<DecodedTokenType> => {
+export const verifyToken = (token: string, secret: string): Promise<UserPayloadType> => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, secret, (err, decoded) => {
       if (err) {
         return reject(err);
       }
-      resolve(decoded as DecodedTokenType);
+      resolve(decoded as UserPayloadType);
     });
   });
 };
