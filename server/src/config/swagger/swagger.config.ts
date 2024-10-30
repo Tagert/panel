@@ -2,6 +2,7 @@ import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import type { Express } from 'express';
 import { config } from '../env.config';
+import { UserSchema } from './schemas/user-sw.schema';
 
 const swaggerOptions = {
   definition: {
@@ -19,7 +20,9 @@ const swaggerOptions = {
           bearerFormat: 'JWT',
         },
       },
-      schemas: {},
+      schemas: {
+        User: UserSchema,
+      },
     },
     security: [
       {
