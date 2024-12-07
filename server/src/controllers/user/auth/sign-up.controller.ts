@@ -15,7 +15,7 @@ export const SIGN_UP: RequestHandler = async (req, res) => {
     });
   }
 
-  const { name, last_name, email, password } = req.body;
+  const { name, last_name, email, password } = data;
 
   try {
     const hashedPassword = await hashPassword(password);
@@ -28,7 +28,7 @@ export const SIGN_UP: RequestHandler = async (req, res) => {
 
     const user = new UserModel({
       name: toUpperCase(name),
-      last_name,
+      last_name: toUpperCase(last_name),
       email,
       password: hashedPassword,
     });
@@ -42,6 +42,6 @@ export const SIGN_UP: RequestHandler = async (req, res) => {
       message: `User (${email}) was added successfully`,
     });
   } catch (err: unknown) {
-    handleError(err, res, 'booking deletion');
+    handleError(err, res, 'user registration');
   }
 };
